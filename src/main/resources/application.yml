@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    active: database
+  shardingsphere:
+    datasource:
+      # 有几个数据就配几个，这里是名称，按照下面的格式，名称+数字的形式
+      names: db0,db1
+      # 为每个数据源单独进行配置
+      db0:
+        # 数据源实现类，这里使用默认的HikariDataSource
+        type: com.zaxxer.hikari.HikariDataSource
+        # 数据库驱动
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        # 不用我多说了吧
+        jdbc-url: jdbc:mysql://192.168.181.128:3306/t
+        username: root
+        password: root
+      db1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://81.70.196.209:3306/t
+        username: root
+        password: G3xfGgW4
+    props:
+      #开启日志，一会方便我们观察
+      sql-show: true
+

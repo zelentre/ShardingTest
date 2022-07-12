@@ -1,0 +1,29 @@
+spring:
+  shardingsphere:
+    # 分表
+    rules:
+      sharding:
+        tables:
+          user:
+            actual-data-nodes: db0.user_$->{0..1}
+            # 配置一下分表策略，注意这里是table-strategy之前是database-strategy
+            table-strategy:
+              #这里选择标准策略，也可以配置复杂策略，基于多个键进行分片
+              standard:
+                #参与分片运算的字段，下面的算法会根据这里提供的字段进行运算
+                sharding-column: id
+                #这里填写我们下面自定义的算法名称
+                sharding-algorithm-name: my-alg
+        sharding-algorithms:
+          #自定义一个新的算法，名称随意
+          my-alg:
+            # 这里我们演示一下INLINE方式，我们可以自行编写表达式来决定
+            type: INLINE
+            props:
+              #比如我们还是希望进行模2计算得到数据该去的表
+              #只需要给一个最终的表名称就行了test_，后面的数字是表达式取模算出的
+              #实际上这样写和MOD模式一模一样
+              algorithm-expression: user_$->{id % 2}
+              #没错，查询也会根据分片策略来进行，但是如果我们使用的是范围查询，那么依然会进行全量查询
+              #这个我们后面紧接着会讲，这里先写上吧
+              allow-range-query-with-inline-sharding: true
