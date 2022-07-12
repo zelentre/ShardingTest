@@ -18,6 +18,18 @@ spring:
                 sharding-column: id
                 #这里填写我们下面自定义的算法名称
                 sharding-algorithm-name: my-alg
+            #这里使用自定义的主键生成策略
+            key-generate-strategy:
+              column: id
+              key-generator-name: my-gen
+        key-generators:
+          #这里写我们自定义的主键生成算法
+          my-gen:
+            #使用雪花算法
+            type: SNOWFLAKE
+            props:
+              #工作机器ID，保证唯一就行
+              worker-id: 233
         sharding-algorithms:
           #自定义一个新的算法，名称随意
           my-alg:

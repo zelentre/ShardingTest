@@ -18,5 +18,8 @@ public class User implements Serializable {
     private String name;
     private String passwd;
 
-
+    public User(String name, String passwd) {
+        this.name = name;
+        this.passwd = passwd;
+    }
 }

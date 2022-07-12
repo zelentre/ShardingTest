@@ -20,7 +20,10 @@ class ShardingTestApplicationTests {
     @Test
     void contextLoads() {
         for (int i = 0; i < 10; i++) {
-            userMapper.insert(new User((long) i, "XX", "233"));
+            // 测试手动输入ID
+            // userMapper.insert(new User((long) i, "XX", "233"));
+            // 测试自动生成ID
+            userMapper.insert(new User("SNOWFLAKE", "233"));
         }
     }
 
